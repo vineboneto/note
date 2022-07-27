@@ -150,3 +150,57 @@
 - Criar um link simbólico `sudo ln -s /etc/nginx/sites-available/<your_conf_file> /etc/nginx/sites-enabled/<your_conf_file>`
 - Remover arquivo `default` em `sites-available` e `sites-enabled`
 - Restart serviço `sudo service nginx restart`
+
+**Dois proxy reverso**
+
+- Crie um arquivo de `nginx.conf` para cada app em sites-available
+- Ex
+
+  - domain-one.conf
+
+  ```nginx
+  server {
+    listen 80;
+    listen [::]:80;
+
+    server_name domain-one.com;
+
+    location / {
+      proxy_pass http://localhost:3333;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+    }
+  }
+
+  - Criar um link simbólico `sudo ln -s /etc/nginx/sites-available/domain-one.conf /etc/nginx/sites-enabled/domain-one.conf`
+
+  ```
+
+  - domain-two.conf
+
+  ```nginx
+  server {
+    listen 80;
+    listen [::]:80;
+
+    server_name domain-two.com;
+
+    location / {
+      proxy_pass http://localhost:3333;
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+      proxy_set_header Host $host;
+    }
+  }
+  ```
+
+  - Criar um link simbólico `sudo ln -s /etc/nginx/sites-available/domain-one.conf /etc/nginx/sites-enabled/domain-two.conf`
+
+> Configurar Certificado https
+
+Acesse (certbot)[https://certbot.eff.org/instructions?ws=nginx&os=ubuntufocal]
+
+- Siga as instruções de instalação de ubuntu nginx
