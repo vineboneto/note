@@ -173,10 +173,9 @@
       proxy_set_header Host $host;
     }
   }
-
-  - Criar um link simbólico `sudo ln -s /etc/nginx/sites-available/domain-one.conf /etc/nginx/sites-enabled/domain-one.conf`
-
+  
   ```
+  - Criar um link simbólico `sudo ln -s /etc/nginx/sites-available/domain-one.conf /etc/nginx/sites-enabled/domain-one.conf`
 
   - domain-two.conf
 
